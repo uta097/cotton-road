@@ -26,6 +26,7 @@ class CreateProductsTable extends Migration
             $table->text('description')->comment('説明');
             $table->string('user_id')->comment('ユーザID');
             $table->unsignedInteger('product_category_id')->comment('カテゴリID');
+            $table->unsignedInteger('product_status_id')->comment('ステータスID');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -65,20 +65,34 @@ Route::prefix('products')->group(function () {
 
 // 発注・入庫系
 Route::prefix('orders')->group(function () {
-    // ダンボール送付待ち一覧
+    // ダンボール一覧
     Route::get('cardboard', 'Admin\Orders\CardboardController@index');
+    Route::post('cardboard/send', 'Admin\Orders\CardboardController@send');
 
     // 承認待ち一覧
     Route::get('unapproved', 'Admin\Orders\UnapprovedController@index');
+    Route::post('unapproved/approve', 'Admin\Orders\UnapprovedController@approve');
+    Route::post('unapproved/noApprove', 'Admin\Orders\UnapprovedController@noApprove');
 
     // コンテナ待ち一覧
     Route::get('container', 'Admin\Orders\ContainerController@index');
+    Route::post('container/add', 'Admin\Orders\ContainerController@add');
+    Route::post('container/back', 'Admin\Orders\ContainerController@back');
+    Route::post('container/disposal', 'Admin\Orders\ContainerController@disposal');
 
     // 返送待ち一覧
-    Route::get('return', 'Admin\Orders\ReturnController@index');
+    Route::get('back', 'Admin\Orders\BackController@index');
+    Route::post('back/send', 'Admin\Orders\BackController@send');
+    Route::post('back/disposal', 'Admin\Orders\BackController@disposal');
 
-    // 入庫履歴
-    Route::get('history', 'Admin\Orders\HistoryController@index');
+    // 廃棄処分待ち一覧
+    Route::get('disposal', 'Admin\Orders\DisposalController@index');
+
+    // 在庫検索
+    Route::get('stock', 'Admin\Orders\StockController@index');
+
+    // 強制ステータス変更
+    Route::get('status', 'Admin\Orders\StatusController@index')->middleware([ 'guards.employees' ]);
 });
 
 // 納品系
