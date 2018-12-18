@@ -28,6 +28,16 @@ class Product extends Model
     }
 
     /**
+     * 商品ステータスとのリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function productStatus()
+    {
+        return $this->belongsTo('App\Models\ProductStatus');
+    }
+
+    /**
      * ユーザとのリレーション
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -54,6 +64,19 @@ class Product extends Model
      * @return array|mixed
      */
     public function getCreatedAtAttribute($value)
+    {
+        $value = explode(' ', $value);
+        $value = str_replace('-', '/', $value[0]);
+        return $value;
+    }
+
+    /**
+     * updated_atのアクセサー
+     *
+     * @param $value
+     * @return array|mixed
+     */
+    public function getUpdatedAtAttribute($value)
     {
         $value = explode(' ', $value);
         $value = str_replace('-', '/', $value[0]);
